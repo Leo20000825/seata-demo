@@ -1,16 +1,20 @@
-nacos-server-addr: 119.23.27.78:8761
-
+nacos-server-addr: 127.0.0.1:8848
+service:
+  vgroupMapping:
+    my_test_tx_group: default
 server:
   port: 8081
   servlet:
     context-path: /account
 spring:
   application:
-    name: Account-Service #客户端名称
+    name: Account-Service-lbn #客户端名称
   cloud:
     nacos:
       discovery:
-        server-addr: http://${nacos-server-addr} # 配置注册中心
+        server-addr: http://127.0.0.1:8848 # 配置注册中心
+        group: SEATA_GROUP
+        namespace: 95d375c2-848a-4fdd-bcdf-2f1ce2989ca1
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
     password: root
@@ -26,7 +30,6 @@ spring:
       maximum-pool-size: 15
       minimum-idle: 5
       pool-name: DatebookHikariCP
-
 ribbon:
   OkToRetryOnAllOperations: false #对所有操作请求都进行重试,默认false
   ReadTimeout: 5000   #负载均衡超时时间，默认值5000
@@ -43,17 +46,17 @@ seata:
   # 开启自动装配
   enabled: true
   # 本客户端的微服务名称
-  application-id: ${spring.application.name}
+  application-id: Business-Service-lbn
   # 读取哪个事务分组
-  tx-service-group: my_test_tx_group
+  tx-service-group: default_tx_group
   # 配置中心设置
   config:
     type: nacos
     nacos:
       # nacos 的ip和端口
-      server-addr: ${nacos-server-addr}
+      server-addr: 127.0.0.1:8848
       # 与上面的命名空间相同
-      namespace: seata-dev
+      namespace: 95d375c2-848a-4fdd-bcdf-2f1ce2989ca1
       # 读取的配置分组
       group: SEATA_GROUP
       username: nacos
@@ -67,7 +70,7 @@ seata:
       # nacos 的ip和端口
       server-addr: ${nacos-server-addr}
       # 与上面的命名空间相同
-      namespace: seata-dev
+      namespace: 95d375c2-848a-4fdd-bcdf-2f1ce2989ca1
       # 读取的配置分组
       group: SEATA_GROUP
       username: nacos

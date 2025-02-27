@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RequestParam;
  * @author liuyongtao
  * @since 2021-3-2 16:51
  */
-@FeignClient(name = "Account-Service")
+@FeignClient(name = "Account-Service-lbn")
 public interface AccountFeign {
 
     @PostMapping("/account/subAccount/{userId}")

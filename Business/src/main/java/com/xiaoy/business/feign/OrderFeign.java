@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RequestBody;
  * @author liuyongtao
  * @since 2021-3-2 16:51
  */
-@FeignClient(name = "Order-Service")
+@FeignClient(name = "Order-Service-lbn")
 public interface OrderFeign {
 
     @PostMapping("/order/insertOrder")

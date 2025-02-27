@@ -1,22 +1,26 @@
-nacos-server-addr: 119.23.27.78:8761
-
+nacos-server-addr: 127.0.0.1:8848
+service:
+  vgroupMapping:
+    my_test_tx_group: default
 server:
   port: 8082
   servlet:
     context-path: /order
 spring:
   application:
-    name: Order-Service #客户端名称
+    name: Order-Service-lbn #客户端名称
   cloud:
     nacos:
       discovery:
-        server-addr: http://${nacos-server-addr} # 配置注册中心
+        server-addr: http://127.0.0.1:8848 # 配置注册中心
+        group: SEATA_GROUP
+        namespace: 95d375c2-848a-4fdd-bcdf-2f1ce2989ca1
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
     password: root
     username: root
     type: com.zaxxer.hikari.HikariDataSource
-    url: jdbc:mysql://127.0.0.1:3306/order?useUnicode=true&characterEncoding=utf8&useSSL=false&autoReconnect=true&serverTimezone=Asia/Shanghai
+    url: jdbc:mysql://127.0.0.1:3306/account?useUnicode=true&characterEncoding=utf8&useSSL=false&autoReconnect=true&serverTimezone=Asia/Shanghai
     hikari:
       auto-commit: true
       connection-test-query: SELECT 1
@@ -32,6 +36,7 @@ ribbon:
   ConnectTimeout: 3000 #ribbon请求连接的超时时间，默认值2000
   MaxAutoRetries: 0     #对当前实例的重试次数，默认0
   MaxAutoRetriesNextServer: 1 #对切换实例的重试次数，默认1
+
 mybatis-plus:
   configuration:
     cache-enabled: false
@@ -41,17 +46,17 @@ seata:
   # 开启自动装配
   enabled: true
   # 本客户端的微服务名称
-  application-id: ${spring.application.name}
+  application-id: Business-Service-lbn
   # 读取哪个事务分组
-  tx-service-group: my_test_tx_group
+  tx-service-group: default_tx_group
   # 配置中心设置
   config:
     type: nacos
     nacos:
       # nacos 的ip和端口
-      server-addr: ${nacos-server-addr}
+      server-addr: 127.0.0.1:8848
       # 与上面的命名空间相同
-      namespace: seata-dev
+      namespace: 95d375c2-848a-4fdd-bcdf-2f1ce2989ca1
       # 读取的配置分组
       group: SEATA_GROUP
       username: nacos
@@ -65,7 +70,7 @@ seata:
       # nacos 的ip和端口
       server-addr: ${nacos-server-addr}
       # 与上面的命名空间相同
-      namespace: seata-dev
+      namespace: 95d375c2-848a-4fdd-bcdf-2f1ce2989ca1
       # 读取的配置分组
       group: SEATA_GROUP
       username: nacos

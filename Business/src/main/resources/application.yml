@@ -1,16 +1,20 @@
-nacos-server-addr: 119.23.27.78:8761
-
+nacos-server-addr: 127.0.0.1:8848
+service:
+  vgroupMapping:
+    my_test_tx_group: default
 server:
   port: 8080
   servlet:
     context-path: /business
 spring:
   application:
-    name: Business-Service #客户端名称
+    name: Business-Service-lbn #客户端名称
   cloud:
     nacos:
       discovery:
-        server-addr: http://${nacos-server-addr} # 配置注册中心
+        server-addr: http://127.0.0.1:8848 # 配置注册中心
+        group: SEATA_GROUP
+        namespace: 95d375c2-848a-4fdd-bcdf-2f1ce2989ca1
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
     password: root
@@ -42,17 +46,17 @@ seata:
   # 开启自动装配
   enabled: true
   # 本客户端的微服务名称
-  application-id: ${spring.application.name}
+  application-id: Business-Service-lbn
   # 读取哪个事务分组
-  tx-service-group: my_test_tx_group
+  tx-service-group: default_tx_group
   # 配置中心设置
   config:
     type: nacos
     nacos:
       # nacos 的ip和端口
-      server-addr: ${nacos-server-addr}
+      server-addr: 127.0.0.1:8848
       # 与上面的命名空间相同
-      namespace: seata-dev
+      namespace: 95d375c2-848a-4fdd-bcdf-2f1ce2989ca1
       # 读取的配置分组
       group: SEATA_GROUP
       username: nacos
@@ -66,7 +70,7 @@ seata:
       # nacos 的ip和端口
       server-addr: ${nacos-server-addr}
       # 与上面的命名空间相同
-      namespace: seata-dev
+      namespace: 95d375c2-848a-4fdd-bcdf-2f1ce2989ca1
       # 读取的配置分组
       group: SEATA_GROUP
       username: nacos
